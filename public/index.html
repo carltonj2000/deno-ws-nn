@@ -78,27 +78,31 @@
   <body>
     <div class="container">
       <h1>Deno Web Chat</h1>
+
+      <form class="name-form">
+        <input type="text" placeholder="choose nickname" required />
+        <button>Enter Chat</button>
+      </form>
+
+      <div class="chatroom hidden">
+        <ul class="chat-list">
+          <li>
+            <div class="name">Carlton</div>
+            <div class="message">Howdy</div>
+          </li>
+        </ul>
+
+        <form class="chat-form">
+          <input
+            type="text"
+            name="mssg"
+            placeholder="type message ..."
+            required
+          />
+          <button>Send Message</button>
+        </form>
+      </div>
     </div>
-
-    <form class="name-form">
-      <input type="text" placeholder="choose nickname" required />
-      <button>Enter Chat</button>
-    </form>
-
-    <div class="chatroom">
-      <ul class="chatlist">
-        <li>
-          <div class="name">Carlton</div>
-          <div class="message">Howdy</div>
-        </li>
-      </ul>
-    </div>
-
-    <form class="chat-form">
-      <input type="text" name="mssg" placeholder="type message ..." required />
-      <button>Send Message</button>
-    </form>
-
     <script>
       console.log("websockets code goes here");
     </script>
