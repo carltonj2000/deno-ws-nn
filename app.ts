@@ -3,27 +3,28 @@ import { acceptWebSocket, acceptable } from "https://deno.land/std/ws/mod.ts";
 
 import { chatConnection } from "./ws/chatroom.ts";
 
-const server = serve({ port: 3000 });
-console.log("http://localhost:3000/");
+const server = serve({ port: 3333 });
+console.log("http://localhost:3333/");
 
 for await (const req of server) {
+  console.log(req.url);
   if (req.url === "/") {
     req.respond({
       status: 200,
       body: await Deno.open("./public/index.html"),
     });
-  } else {
-    req.respond({ body: "Hi World\n" });
-  }
-
-  if (req.url === "/ws") {
+  } else if (req.url === "/ws") {
     if (acceptable(req)) {
       acceptWebSocket({
         conn: req.conn,
         bufReader: req.r,
         bufWriter: req.w,
         headers: req.headers,
-      }).then(chatConnection);
+      })
+        .then(chatConnection)
+        .catch((err) => console.error(err));
     }
+  } else {
+    req.respond({ body: "Hi World\n" });
   }
 }

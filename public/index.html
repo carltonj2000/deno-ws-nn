@@ -80,11 +80,16 @@
       <h1>Deno Web Chat</h1>
 
       <form class="name-form">
-        <input type="text" placeholder="choose nickname" required />
+        <input
+          type="text"
+          placeholder="choose nickname"
+          name="nickname"
+          required
+        />
         <button>Enter Chat</button>
       </form>
 
-      <div class="chatroom hidden">
+      <div class="chat-room hidden">
         <ul class="chat-list">
           <li>
             <div class="name">Carlton</div>
@@ -104,7 +109,26 @@
       </div>
     </div>
     <script>
-      let ws = new WebSocket("ws://localhost:3000/ws");
+      const wss = new WebSocket("ws://localhost:3333/ws");
+      const nameForm = document.querySelector(".name-form");
+      const chatRoom = document.querySelector(".chat-room");
+      const chatList = document.querySelector(".chat-list");
+      const chatForm = document.querySelector(".chat-form");
+
+      let name = "anon";
+
+      nameForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        name = nameForm.nickname.value;
+        nameForm.classList.add("hidden");
+        chatRoom.classList.remove("hidden");
+      });
+
+      chatForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let mssg = chatForm.mssg.value;
+        wss.send(JSON.stringify({ mssg, name }));
+      });
     </script>
   </body>
 </html>
