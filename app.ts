@@ -4,10 +4,9 @@ import { acceptWebSocket, acceptable } from "https://deno.land/std/ws/mod.ts";
 import { chatConnection } from "./ws/chatroom.ts";
 
 const server = serve({ port: 3333 });
-console.log("http://localhost:3333/");
+console.log("Listening on http://localhost:3333/");
 
 for await (const req of server) {
-  console.log(req.url);
   if (req.url === "/") {
     req.respond({
       status: 200,

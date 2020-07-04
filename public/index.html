@@ -90,12 +90,7 @@
       </form>
 
       <div class="chat-room hidden">
-        <ul class="chat-list">
-          <li>
-            <div class="name">Carlton</div>
-            <div class="message">Howdy</div>
-          </li>
-        </ul>
+        <ul class="chat-list"></ul>
 
         <form class="chat-form">
           <input
@@ -128,6 +123,17 @@
         e.preventDefault();
         let mssg = chatForm.mssg.value;
         wss.send(JSON.stringify({ mssg, name }));
+      });
+
+      wss.addEventListener("message", (msg) => {
+        const { name, mssg } = JSON.parse(msg.data);
+        const template = `
+          <li>
+            <div class="name">${name}</div>
+            <div class="message">${mssg}</div>
+          </li>
+        `;
+        chatList.innerHTML += template;
       });
     </script>
   </body>
